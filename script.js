@@ -1,5 +1,5 @@
-function createGameBoard() {
-  let gameBoard = [
+const gameBoard = (function () {
+  let board = [
     [".", ".", "."],
     [".", ".", "."],
     [".", ".", "."],
@@ -7,23 +7,25 @@ function createGameBoard() {
 
   const setMove = (row, column, symbol) => {
     if (validMove(row, column)) {
-      gameBoard[row][column] = symbol;
+      board[row][column] = symbol;
+      checkWinner(symbol);
     } else {
       console.log("Invalid spot");
+      checkWinner(symbol);
     }
   };
 
   // check if board is free
   const validMove = (row, column) => {
-    return gameBoard[row][column] === "." ? true : false;
+    return board[row][column] === "." ? true : false;
   };
 
   // loop through every row to check for a winner
   const checkColumn = (row, playerSymbol) => {
     let match = true;
 
-    for (let i = 0; i < gameBoard.length; i++) {
-      if (gameBoard[row][i] !== playerSymbol) {
+    for (let i = 0; i < board.length; i++) {
+      if (board[row][i] !== playerSymbol) {
         match = false;
       }
     }
@@ -34,8 +36,8 @@ function createGameBoard() {
   const checkRow = (column, playerSymbol) => {
     let match = true;
 
-    for (let i = 0; i < gameBoard.length; i++) {
-      if (gameBoard[i][column] !== playerSymbol) {
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][column] !== playerSymbol) {
         match = false;
       }
     }
@@ -49,8 +51,8 @@ function createGameBoard() {
     let match = true;
 
     // check left to right for x
-    for (let i = 0; i < gameBoard.length; i++) {
-      if (gameBoard[i][i] !== playerSymbol) {
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][i] !== playerSymbol) {
         match = false;
       }
     }
@@ -62,9 +64,9 @@ function createGameBoard() {
     match = true;
 
     // if first diagonal is true ignore
-    let column = gameBoard.length - 1;
-    for (let i = 0; i < gameBoard.length; i++, column--) {
-      if (gameBoard[i][column] !== playerSymbol) {
+    let column = board.length - 1;
+    for (let i = 0; i < board.length; i++, column--) {
+      if (board[i][column] !== playerSymbol) {
         match = false;
       }
     }
@@ -72,44 +74,39 @@ function createGameBoard() {
     return match;
   };
 
-  const checkWinner = (playerSymbol) => {
-    for (let i = 0; i < gameBoard.length; i++) {
+  const checkWinner = (symbol) => {
+    for (let i = 0; i < board.length; i++) {
       if (
-        checkDiagonal(playerSymbol) ||
-        checkColumn(i, playerSymbol) ||
-        checkRow(i, playerSymbol)
+        checkDiagonal(symbol) ||
+        checkColumn(i, symbol) ||
+        checkRow(i, symbol)
       ) {
-        console.log(playerSymbol + " Won");
-        break;
+        return { symbol, status: "won" };
       }
+    }
+    return { symbol, status: "lost" };
+  };
+
+  const gameOver = (playerOne, playerTwo) => {
+    if (playerOne.status === "lost" && playerOne.status === "lost") {
+      console.log("Draw! -> No winner!");
+    } else if (playerOne.status === "won") {
+      console.log(`${playerOne.symbol} won!`);
+      console.log(`${playerTwo.symbol} lost!`);
+    } else if (playerTwo.status === "won") {
+      console.log(`${playerTwo.symbol} won!`);
+      console.log(`${playerOne.symbol} lost!`);
     }
   };
 
-  const gameOver = () => {};
-
   return {
-    gameBoard,
+    board,
     setMove,
     checkWinner,
-    checkColumn,
-    checkDiagonal,
-    checkRow,
+    gameOver,
   };
-}
+})();
 
 function createPlayer(name, symbol) {
   return { name, symbol };
 }
-
-let board = createGameBoard();
-
-console.log(board.gameBoard);
-
-let player1 = createPlayer("bob", "x");
-let player2 = createPlayer("mario", "o");
-
-board.setMove(0, 0, player1.symbol);
-board.setMove(1, 1, player1.symbol);
-board.setMove(2, 2, player1.symbol);
-
-board.checkWinner(player1.symbol);
