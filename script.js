@@ -1,8 +1,8 @@
 const gameBoard = (function () {
   let board = [
-    [".", ".", "."],
-    [".", ".", "."],
-    [".", ".", "."],
+    ["x", "o", "x"],
+    ["x", "x", "x"],
+    ["z", "o", "x"],
   ];
 
   const setMove = (row, column, symbol) => {
@@ -109,4 +109,17 @@ function createPlayer(name, symbol) {
   return { name, symbol };
 }
 
-const displayController = (function () {})();
+const displayController = (function () {
+  const fillDomBoard = () => {
+    const domBoard = document.querySelectorAll(".cell");
+    const flatBoard = gameBoard.board.flat();
+
+    for (let i = 0; i < 9; i++) {
+      domBoard[i].innerText = flatBoard[i];
+    }
+  };
+
+  return { fillDomBoard };
+})();
+
+displayController.fillDomBoard();
