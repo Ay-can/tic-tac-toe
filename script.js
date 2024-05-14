@@ -8,10 +8,8 @@ const gameBoard = (function () {
   const setMove = (row, column, symbol) => {
     if (validMove(row, column)) {
       board[row][column] = symbol;
-      checkWinner(symbol);
     } else {
       console.log("Invalid spot");
-      checkWinner(symbol);
     }
   };
 
@@ -110,3 +108,5 @@ const gameBoard = (function () {
 function createPlayer(name, symbol) {
   return { name, symbol };
 }
+
+const displayController = (function () {})();
