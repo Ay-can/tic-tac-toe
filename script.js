@@ -103,6 +103,7 @@ function createPlayer(name, symbol) {
 const displayController = (function () {
   const playerOne = createPlayer("bob", "x");
   const playerTwo = createPlayer("john", "o");
+  const domGameBoard = document.querySelector(".gameboard");
 
   // start with player one
   let turn = playerOne;
@@ -119,6 +120,40 @@ const displayController = (function () {
     }
   };
 
+  const resetBoard = () => {
+    for (let i = 0; i < gameBoard.board.length; i++) {
+      for (let j = 0; j < gameBoard.board.length; j++) {
+        gameBoard.board[i][j] = "";
+      }
+    }
+    console.log(gameBoard.board);
+  };
+
+  const endMessage = (turn) => {
+    //const winnerH1 = document.querySelector(".winner");
+
+    //winnerH1.innerText = `${turn.name} wins!`;
+
+    const dialog = document.querySelector("dialog");
+    const h1 = document.querySelector(".dialog-container > h1");
+    const button = document.querySelector(".dialog-container > button");
+
+    dialog.showModal();
+    h1.innerText = `${turn.name} wins!`;
+
+    button.addEventListener("click", () => {
+      gameOver();
+      dialog.close();
+    });
+  };
+
+  const gameOver = () => {
+    //domGameBoard.remove();
+    resetBoard();
+    //document.body.appendChild(domGameBoard);
+    fillDomBoard();
+  };
+
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
@@ -130,7 +165,8 @@ const displayController = (function () {
 
       // check winner
       if (gameBoard.checkWinner(turn.symbol)) {
-        gameBoard.gameOver(turn);
+        gameOver(turn);
+        endMessage(turn);
       }
 
       // change turn

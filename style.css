@@ -58,3 +58,12 @@ body {
 #middle-right {
   border-right: none;
 }
+
+.dialog-container {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
