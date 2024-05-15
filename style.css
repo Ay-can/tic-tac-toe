@@ -13,13 +13,14 @@ body {
   display: grid;
   width: 600px;
   height: 600px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .cell {
   border: 1px solid black;
   font-size: 7rem;
   text-align: center;
+  height: 200px;
 }
 
 #left-corner-top {

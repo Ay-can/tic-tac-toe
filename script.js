@@ -119,6 +119,8 @@ const displayController = (function () {
     }
   };
 
+  const setMove = () => {};
+
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell, index) => {
     cell.addEventListener("click", (e) => {
@@ -126,15 +128,19 @@ const displayController = (function () {
 
       // set attribute with row index for board
       if (getTargetClassList.contains("top-row")) {
-        e.target.dataset.rowIndex = 0;
+        e.target.innerText = "x";
+        gameBoard.board[(0, index)];
       } else if (getTargetClassList.contains("middle-row")) {
         e.target.dataset.rowIndex = 1;
+        e.target.innerText = "x";
+        gameBoard.board[(1, index)];
       } else {
         e.target.dataset.rowIndex = 2;
+        e.target.innerText = "x";
+        gameBoard.board[(2, index)];
       }
 
       // set column index
-      e.target.dataset.columnIndex = index;
     });
   });
 
