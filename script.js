@@ -79,22 +79,13 @@ const gameBoard = (function () {
         checkColumn(i, symbol) ||
         checkRow(i, symbol)
       ) {
-        return { symbol, status: "won" };
+        return true;
       }
     }
-    return { symbol, status: "lost" };
   };
 
-  const gameOver = (playerOne, playerTwo) => {
-    if (playerOne.status === "lost" && playerOne.status === "lost") {
-      console.log("Draw! -> No winner!");
-    } else if (playerOne.status === "won") {
-      console.log(`${playerOne.symbol} won!`);
-      console.log(`${playerTwo.symbol} lost!`);
-    } else if (playerTwo.status === "won") {
-      console.log(`${playerTwo.symbol} won!`);
-      console.log(`${playerOne.symbol} lost!`);
-    }
+  const gameOver = (winner) => {
+    console.log(winner.name + " wins!");
   };
 
   return {
@@ -136,6 +127,11 @@ const displayController = (function () {
       const column = e.target.dataset.column;
 
       gameBoard.board[row][column] = turn.symbol;
+
+      // check winner
+      if (gameBoard.checkWinner(turn.symbol)) {
+        gameBoard.gameOver(turn);
+      }
 
       // change turn
       toggleTurn();
