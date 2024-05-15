@@ -110,6 +110,15 @@ function createPlayer(name, symbol) {
 }
 
 const displayController = (function () {
+  const playerOne = createPlayer("bob", "x");
+  const playerTwo = createPlayer("john", "o");
+
+  // start with player one
+  let turn = playerOne;
+
+  const toggleTurn = () =>
+    turn === playerOne ? (turn = playerTwo) : (turn = playerOne);
+
   const fillDomBoard = () => {
     const domBoard = document.querySelectorAll(".cell");
     const flatBoard = gameBoard.board.flat();
@@ -119,28 +128,19 @@ const displayController = (function () {
     }
   };
 
-  const setMove = () => {};
-
   const cells = document.querySelectorAll(".cell");
-  cells.forEach((cell, index) => {
+  cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
-      const getTargetClassList = e.target.classList;
+      e.target.innerText = turn.symbol;
+      const row = e.target.dataset.row;
+      const column = e.target.dataset.column;
 
-      // set attribute with row index for board
-      if (getTargetClassList.contains("top-row")) {
-        e.target.innerText = "x";
-        gameBoard.board[(0, index)];
-      } else if (getTargetClassList.contains("middle-row")) {
-        e.target.dataset.rowIndex = 1;
-        e.target.innerText = "x";
-        gameBoard.board[(1, index)];
-      } else {
-        e.target.dataset.rowIndex = 2;
-        e.target.innerText = "x";
-        gameBoard.board[(2, index)];
-      }
+      gameBoard.board[row][column] = turn.symbol;
 
-      // set column index
+      // change turn
+      toggleTurn();
+
+      console.log(gameBoard.board);
     });
   });
 
