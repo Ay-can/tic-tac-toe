@@ -18,7 +18,8 @@ body {
 
 .cell {
   border: 1px solid black;
-  font-size: 6rem;
+  font-size: 7rem;
+  text-align: center;
 }
 
 #left-corner-top {

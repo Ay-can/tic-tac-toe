@@ -1,8 +1,8 @@
 const gameBoard = (function () {
   let board = [
-    ["x", "o", "x"],
-    ["x", "x", "x"],
-    ["z", "o", "x"],
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
   ];
 
   const setMove = (row, column, symbol) => {
@@ -15,7 +15,7 @@ const gameBoard = (function () {
 
   // check if board is free
   const validMove = (row, column) => {
-    return board[row][column] === "." ? true : false;
+    return board[row][column] === "" ? true : false;
   };
 
   // loop through every row to check for a winner
@@ -118,6 +118,25 @@ const displayController = (function () {
       domBoard[i].innerText = flatBoard[i];
     }
   };
+
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach((cell, index) => {
+    cell.addEventListener("click", (e) => {
+      const getTargetClassList = e.target.classList;
+
+      // set attribute with row index for board
+      if (getTargetClassList.contains("top-row")) {
+        e.target.dataset.rowIndex = 0;
+      } else if (getTargetClassList.contains("middle-row")) {
+        e.target.dataset.rowIndex = 1;
+      } else {
+        e.target.dataset.rowIndex = 2;
+      }
+
+      // set column index
+      e.target.dataset.columnIndex = index;
+    });
+  });
 
   return { fillDomBoard };
 })();
