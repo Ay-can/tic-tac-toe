@@ -130,10 +130,6 @@ const displayController = (function () {
   };
 
   const endMessage = (turn) => {
-    //const winnerH1 = document.querySelector(".winner");
-
-    //winnerH1.innerText = `${turn.name} wins!`;
-
     const dialog = document.querySelector("dialog");
     const h1 = document.querySelector(".dialog-container > h1");
     const button = document.querySelector(".dialog-container > button");
@@ -148,9 +144,7 @@ const displayController = (function () {
   };
 
   const gameOver = () => {
-    //domGameBoard.remove();
     resetBoard();
-    //document.body.appendChild(domGameBoard);
     fillDomBoard();
   };
 
