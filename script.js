@@ -13,6 +13,17 @@ const gameBoard = (function () {
     }
   };
 
+  const checkAvailableMoves = () => {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board.length; j++) {
+        if (board[i][j] === "") {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   // check if board is free
   const validMove = (row, column) => {
     return board[row][column] === "" ? true : false;
@@ -93,6 +104,7 @@ const gameBoard = (function () {
     setMove,
     checkWinner,
     gameOver,
+    checkAvailableMoves,
   };
 })();
 
@@ -103,7 +115,6 @@ function createPlayer(name, symbol) {
 const displayController = (function () {
   const playerOne = createPlayer("bob", "x");
   const playerTwo = createPlayer("john", "o");
-  const domGameBoard = document.querySelector(".gameboard");
 
   // start with player one
   let turn = playerOne;
@@ -129,13 +140,17 @@ const displayController = (function () {
     console.log(gameBoard.board);
   };
 
-  const endMessage = (turn) => {
+  const endMessage = (turn, isDraw) => {
     const dialog = document.querySelector("dialog");
     const h1 = document.querySelector(".dialog-container > h1");
     const button = document.querySelector(".dialog-container > button");
 
     dialog.showModal();
-    h1.innerText = `${turn.name} wins!`;
+    if (!isDraw) {
+      h1.innerText = `${turn.name} wins!`;
+    } else {
+      h1.innerText = `Draw!`;
+    }
 
     button.addEventListener("click", () => {
       gameOver();
@@ -157,10 +172,16 @@ const displayController = (function () {
 
       gameBoard.board[row][column] = turn.symbol;
 
+      let isDraw = false;
+
       // check winner
       if (gameBoard.checkWinner(turn.symbol)) {
         gameOver(turn);
-        endMessage(turn);
+        endMessage(turn, isDraw);
+      } else if (!gameBoard.checkAvailableMoves()) {
+        isDraw = true;
+        gameOver(turn);
+        endMessage(turn, isDraw);
       }
 
       // change turn
