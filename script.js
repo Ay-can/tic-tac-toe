@@ -137,7 +137,6 @@ const displayController = (function () {
         gameBoard.board[i][j] = "";
       }
     }
-    console.log(gameBoard.board);
   };
 
   const endMessage = (turn, isDraw) => {
@@ -153,7 +152,6 @@ const displayController = (function () {
     }
 
     button.addEventListener("click", () => {
-      gameOver();
       dialog.close();
     });
   };
@@ -163,17 +161,23 @@ const displayController = (function () {
     fillDomBoard();
   };
 
+  const displayCurrentTurn = (currentTurn) => {
+    const h1Turn = document.querySelector(".current-turn");
+    h1Turn.innerText = `${currentTurn.name}'s turn`;
+  };
+
+  // Display current player on screen;
+  displayCurrentTurn(turn);
+
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
       e.target.innerText = turn.symbol;
       const row = e.target.dataset.row;
       const column = e.target.dataset.column;
-
       gameBoard.board[row][column] = turn.symbol;
 
       let isDraw = false;
-
       // check winner
       if (gameBoard.checkWinner(turn.symbol)) {
         gameOver(turn);
@@ -186,12 +190,9 @@ const displayController = (function () {
 
       // change turn
       toggleTurn();
-
-      console.log(gameBoard.board);
+      displayCurrentTurn(turn);
     });
   });
 
   return { fillDomBoard };
 })();
-
-displayController.fillDomBoard();
