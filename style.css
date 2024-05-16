@@ -11,7 +11,6 @@ body {
 }
 
 .gameboard {
-  margin-top: 60px;
   display: grid;
   width: 600px;
   height: 600px;
@@ -84,4 +83,12 @@ dialog {
 .dialog-container button:active {
   position: relative;
   top: 4px;
+}
+
+.player-info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 35px;
 }

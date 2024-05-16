@@ -109,7 +109,7 @@ const gameBoard = (function () {
 })();
 
 function createPlayer(name, symbol) {
-  return { name, symbol };
+  return { name, symbol, wins: 0 };
 }
 
 const displayController = (function () {
@@ -161,6 +161,14 @@ const displayController = (function () {
     fillDomBoard();
   };
 
+  const setPlayerScores = () => {
+    const playerOneScoreH2 = document.querySelector(".player-one-score");
+    const playerTwoScoreH2 = document.querySelector(".player-two-score");
+
+    playerOneScoreH2.innerText = `${playerOne.name} ${playerOne.wins}`;
+    playerTwoScoreH2.innerText = `${playerTwo.name} ${playerTwo.wins}`;
+  };
+
   const displayCurrentTurn = (currentTurn) => {
     const h1Turn = document.querySelector(".current-turn");
     h1Turn.innerText = `${currentTurn.name}'s turn`;
@@ -168,6 +176,7 @@ const displayController = (function () {
 
   // Display current player on screen;
   displayCurrentTurn(turn);
+  setPlayerScores();
 
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
@@ -182,6 +191,7 @@ const displayController = (function () {
       if (gameBoard.checkWinner(turn.symbol)) {
         gameOver(turn);
         endMessage(turn, isDraw);
+        turn.wins++;
       } else if (!gameBoard.checkAvailableMoves()) {
         isDraw = true;
         gameOver(turn);
@@ -191,6 +201,7 @@ const displayController = (function () {
       // change turn
       toggleTurn();
       displayCurrentTurn(turn);
+      setPlayerScores();
     });
   });
 
