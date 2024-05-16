@@ -181,27 +181,29 @@ const displayController = (function () {
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
     cell.addEventListener("click", (e) => {
-      e.target.innerText = turn.symbol;
-      const row = e.target.dataset.row;
-      const column = e.target.dataset.column;
-      gameBoard.board[row][column] = turn.symbol;
+      if (e.target.innerText === "") {
+        e.target.innerText = turn.symbol;
+        const row = e.target.dataset.row;
+        const column = e.target.dataset.column;
+        gameBoard.board[row][column] = turn.symbol;
 
-      let isDraw = false;
-      // check winner
-      if (gameBoard.checkWinner(turn.symbol)) {
-        gameOver(turn);
-        endMessage(turn, isDraw);
-        turn.wins++;
-      } else if (!gameBoard.checkAvailableMoves()) {
-        isDraw = true;
-        gameOver(turn);
-        endMessage(turn, isDraw);
+        let isDraw = false;
+        // check winner
+        if (gameBoard.checkWinner(turn.symbol)) {
+          gameOver(turn);
+          endMessage(turn, isDraw);
+          turn.wins++;
+        } else if (!gameBoard.checkAvailableMoves()) {
+          isDraw = true;
+          gameOver(turn);
+          endMessage(turn, isDraw);
+        }
+
+        // change turn
+        toggleTurn();
+        displayCurrentTurn(turn);
+        setPlayerScores();
       }
-
-      // change turn
-      toggleTurn();
-      displayCurrentTurn(turn);
-      setPlayerScores();
     });
   });
 
