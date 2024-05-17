@@ -113,11 +113,33 @@ function createPlayer(name, symbol) {
 }
 
 const displayController = (function () {
-  const playerOne = createPlayer("bob", "x");
-  const playerTwo = createPlayer("john", "o");
+  const playerOne = createPlayer("t", "x");
+  const playerTwo = createPlayer("t", "o");
 
   // start with player one
   let turn = playerOne;
+
+  const createPlayerDialog = () => {
+    const playerDialog = document.querySelector("#create-player");
+    const form = document.querySelector("form");
+    const playerOneInput = document.querySelector("#player-one");
+    const playerTwoInput = document.querySelector("#player-two");
+    const startGameBtn = document.querySelector("input + button");
+
+    playerDialog.showModal();
+
+    startGameBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (form.reportValidity()) {
+        playerOne.name = playerOneInput.value;
+        playerTwo.name = playerTwoInput.value;
+        setPlayerScores();
+        displayCurrentTurn(turn);
+        playerDialog.close();
+      }
+    });
+  };
+  createPlayerDialog();
 
   const toggleTurn = () =>
     turn === playerOne ? (turn = playerTwo) : (turn = playerOne);
@@ -140,7 +162,7 @@ const displayController = (function () {
   };
 
   const endMessage = (turn, isDraw) => {
-    const dialog = document.querySelector("dialog");
+    const dialog = document.querySelector("#winner-dialog");
     const h1 = document.querySelector(".dialog-container > h1");
     const button = document.querySelector(".dialog-container > button");
 
@@ -175,8 +197,6 @@ const displayController = (function () {
   };
 
   // Display current player on screen;
-  displayCurrentTurn(turn);
-  setPlayerScores();
 
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) => {
@@ -206,6 +226,4 @@ const displayController = (function () {
       }
     });
   });
-
-  return { fillDomBoard };
 })();

@@ -8,13 +8,35 @@
     <script defer src="script.js"></script>
   </head>
   <body>
-    <div class="title">Tic-Tac-Toe</div>
+    <dialog id="create-player">
+      <form action="#">
+        <label for="player-one">Player 1</label>
+        <input
+          type="text"
+          id="player-one"
+          placeholder="john"
+          minlength="3"
+          required
+        />
+        <label for="player-two">Player 2</label>
+        <input
+          type="text"
+          id="player-two"
+          placeholder="bob"
+          minlength="3"
+          required
+        />
+        <button>Start Game</button>
+      </form>
+    </dialog>
+
+    <div class="title">Minimal Tic-Tac-Toe</div>
     <div class="player-info">
       <h2 class="player-one-score"></h2>
       <h1 class="current-turn"></h1>
       <h2 class="player-two-score"></h2>
     </div>
-    <dialog>
+    <dialog id="winner-dialog">
       <div class="dialog-container">
         <h1 class="winner"></h1>
         <button autofocus>Play Again</button>
@@ -46,6 +68,17 @@
         data-row="2"
         data-column="2"
       ></div>
+    </div>
+    <div class="footer">
+      <p>
+        Made By
+        <a
+          href="https://github.com/Ay-can"
+          target="_blank"
+          rel="noreferer noopener"
+          >Ay-can</a
+        >
+      </p>
     </div>
   </body>
 </html>

@@ -8,6 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 8px;
 }
 
 .gameboard {
@@ -91,4 +92,18 @@ dialog {
   align-items: center;
   justify-content: space-evenly;
   margin-bottom: 35px;
+}
+
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+.footer {
+  margin-top: 20px;
+}
+
+#create-player {
+  width: 200px;
+  height: 200px;
 }
