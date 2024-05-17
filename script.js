@@ -5,14 +5,6 @@ const gameBoard = (function () {
     ["", "", ""],
   ];
 
-  const setMove = (row, column, symbol) => {
-    if (validMove(row, column)) {
-      board[row][column] = symbol;
-    } else {
-      console.log("Invalid spot");
-    }
-  };
-
   const checkAvailableMoves = () => {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board.length; j++) {
@@ -22,11 +14,6 @@ const gameBoard = (function () {
       }
     }
     return false;
-  };
-
-  // check if board is free
-  const validMove = (row, column) => {
-    return board[row][column] === "" ? true : false;
   };
 
   // loop through every row to check for a winner
@@ -95,15 +82,9 @@ const gameBoard = (function () {
     }
   };
 
-  const gameOver = (winner) => {
-    console.log(winner.name + " wins!");
-  };
-
   return {
     board,
-    setMove,
     checkWinner,
-    gameOver,
     checkAvailableMoves,
   };
 })();
@@ -112,6 +93,7 @@ function createPlayer(name, symbol) {
   return { name, symbol, wins: 0 };
 }
 
+// Display module
 const displayController = (function () {
   const playerOne = createPlayer("john", "x");
   const playerTwo = createPlayer("bob", "o");
