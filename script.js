@@ -113,8 +113,8 @@ function createPlayer(name, symbol) {
 }
 
 const displayController = (function () {
-  const playerOne = createPlayer("t", "x");
-  const playerTwo = createPlayer("t", "o");
+  const playerOne = createPlayer("john", "x");
+  const playerTwo = createPlayer("bob", "o");
 
   // start with player one
   let turn = playerOne;
